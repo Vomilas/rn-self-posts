@@ -10,6 +10,8 @@ import {
 } from "react-native";
 import { DATA } from "../data";
 import { THEME } from "../theme";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { AppHeaderIcon } from "../components/AppHeaderIcon";
 
 export const PostScreen = ({ navigation }) => {
   const postId = navigation.getParam("postId");
@@ -47,9 +49,20 @@ export const PostScreen = ({ navigation }) => {
 
 PostScreen.navigationOptions = ({ navigation }) => {
   const date = navigation.getParam("date");
+  const booked = navigation.getParam("booked");
+  const iconName = booked ? "ios-star" : "ios-star-outline";
 
   return {
-    headerTitle: `Post ${new Date(date).toLocaleDateString()}`
+    headerTitle: `Post ${new Date(date).toLocaleDateString()}`,
+    headerRight: (
+      <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
+        <Item
+          title="Toggle drawer"
+          iconName={iconName}
+          onPress={() => console.log("Press photo")}
+        />
+      </HeaderButtons>
+    )
   };
 };
 
