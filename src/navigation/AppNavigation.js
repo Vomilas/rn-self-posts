@@ -73,16 +73,49 @@ const BottomNavigator =
         }
       });
 
-const MainNavigator = createDrawerNavigator({
-  PostTabs: {
-    screen: BottomNavigator
+const AboutNavigator = createStackNavigator(
+  {
+    About: AboutScreen
   },
-  About: {
-    screen: AboutScreen
+  navigatorOptions
+);
+
+const CreateNavigator = createStackNavigator(
+  {
+    Create: CreateScreen
   },
-  Create: {
-    screen: CreateScreen
+  navigatorOptions
+);
+
+const MainNavigator = createDrawerNavigator(
+  {
+    PostTabs: {
+      screen: BottomNavigator,
+      navigationOptions: {
+        drawerLabel: "Main"
+      }
+    },
+    About: {
+      screen: AboutNavigator,
+      navigationOptions: {
+        drawerLabel: "About app"
+      }
+    },
+    Create: {
+      screen: CreateNavigator,
+      navigationOptions: {
+        drawerLabel: "New post"
+      }
+    }
+  },
+  {
+    contentOptions: {
+      activeTintColor: THEME.MAIN_COLOR,
+      labelStyle: {
+        fontFamily: "open-bold"
+      }
+    }
   }
-});
+);
 
 export const AppNavigation = createAppContainer(MainNavigator);
