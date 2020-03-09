@@ -12,18 +12,20 @@ export const loadPosts = () => {
   };
 };
 
-export const toggleBooked = id => {
-  return {
+export const toggleBooked = post => async dispatch => {
+  await DB.updatePost(post);
+  dispatch({
     type: TOGGLE_BOOKED,
-    payload: id
-  };
+    payload: post.id
+  });
 };
 
-export const removePost = id => {
-  return {
+export const removePost = id => async dispatch => {
+  await DB.removePost(id);
+  dispatch({
     type: REMOVE_POST,
     payload: id
-  };
+  });
 };
 
 export const addPost = post => async dispatch => {
@@ -38,8 +40,7 @@ export const addPost = post => async dispatch => {
     console.log("Error", e);
   }
   const payload = { ...post, img: newPath };
-  const id = await DB.createPost(payload);
-  payload.id = id;
+  payload.id = await DB.createPost(payload);
   dispatch({
     type: ADD_POST,
     payload
